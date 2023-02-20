@@ -11,6 +11,7 @@ npm i vue-router-iframe
 ```
 
 ```js
+import VueRouter from "vue-router-iframe";
 const router = new Router({
   mode: 'abstract-history'
   ...
