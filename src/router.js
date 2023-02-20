@@ -14,6 +14,7 @@ import { isNavigationFailure, NavigationFailureType } from './util/errors'
 import { HashHistory } from './history/hash'
 import { HTML5History } from './history/html5'
 import { AbstractHistory } from './history/abstract'
+import { AbstractHTML5History } from './history/abstract-history'
 
 import type { Matcher } from './create-matcher'
 
@@ -69,6 +70,9 @@ export default class VueRouter {
         break
       case 'abstract':
         this.history = new AbstractHistory(this, options.base)
+        break
+      case 'abstract-history':
+        this.history = new AbstractHTML5History(this, options.base)
         break
       default:
         if (process.env.NODE_ENV !== 'production') {
@@ -137,6 +141,8 @@ export default class VueRouter {
         setupListeners,
         setupListeners
       )
+    } else if (history instanceof AbstractHTML5History) {
+      history.push(history.getCurrentLocation())
     }
 
     history.listen(route => {

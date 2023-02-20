@@ -1,6 +1,6 @@
 /*!
   * vue-router v3.6.5
-  * (c) 2022 Evan You
+  * (c) 2023 Evan You
   * @license MIT
   */
 /*  */
@@ -2849,6 +2849,20 @@ class AbstractHistory extends History {
 }
 
 /*  */
+class AbstractHTML5History extends AbstractHistory {
+  
+  
+  getCurrentLocation () {
+    if (this.stack.length === 0) {
+      return getLocation(this.base)
+    } else {
+      const current = this.stack[this.stack.length - 1];
+      return current ? current.fullPath : '/'
+    }
+  }
+}
+
+/*  */
 
 
 
@@ -2904,6 +2918,9 @@ class VueRouter {
         break
       case 'abstract':
         this.history = new AbstractHistory(this, options.base);
+        break
+      case 'abstract-history':
+        this.history = new AbstractHTML5History(this, options.base);
         break
       default:
         {
@@ -2971,6 +2988,8 @@ class VueRouter {
         setupListeners,
         setupListeners
       );
+    } else if (history instanceof AbstractHTML5History) {
+      history.push(history.getCurrentLocation());
     }
 
     history.listen(route => {

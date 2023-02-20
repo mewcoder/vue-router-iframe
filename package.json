@@ -1,8 +1,8 @@
 {
-  "name": "vue-router",
-  "version": "3.6.5",
-  "description": "Official router for Vue.js 2",
-  "author": "Evan You",
+  "name": "vue-router-iframe",
+  "version": "0.0.1",
+  "description": "Modify for the iframe tab, Solved the problem of iframe sharing browser history.",
+  "author": "mewcoder",
   "license": "MIT",
   "main": "dist/vue-router.common.js",
   "module": "dist/vue-router.esm.js",
@@ -11,7 +11,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/vuejs/vue-router.git"
+    "url": "https://github.com/mewcoder/vue-router-iframe"
   },
   "typings": "types/index.d.ts",
   "files": [
@@ -55,6 +55,7 @@
   "scripts": {
     "dev": "node examples/server.js",
     "dev:dist": "rollup -wm -c build/rollup.dev.config.js",
+    "dev:debug": "rollup -c build/rollup.debug.config.js",
     "build": "node build/build.js",
     "lint": "eslint src examples test",
     "test": "npm run lint && npm run flow && npm run test:unit && npm run test:e2e && npm run test:types",
@@ -133,7 +134,7 @@
     "yorkie": "^2.0.0"
   },
   "bugs": {
-    "url": "https://github.com/vuejs/vue-router/issues"
+    "url": "https://github.com/mewcoder/vue-router-iframe/issues"
   },
-  "homepage": "https://github.com/vuejs/vue-router#readme"
+  "homepage": "https://github.com/mewcoder/vue-router-iframe#readme"
 }

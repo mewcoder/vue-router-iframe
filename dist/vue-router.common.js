@@ -1,6 +1,6 @@
 /*!
   * vue-router v3.6.5
-  * (c) 2022 Evan You
+  * (c) 2023 Evan You
   * @license MIT
   */
 'use strict';
@@ -2891,6 +2891,28 @@ var AbstractHistory = /*@__PURE__*/(function (History) {
 }(History));
 
 /*  */
+var AbstractHTML5History = /*@__PURE__*/(function (AbstractHistory) {
+  function AbstractHTML5History () {
+    AbstractHistory.apply(this, arguments);
+  }
+
+  if ( AbstractHistory ) AbstractHTML5History.__proto__ = AbstractHistory;
+  AbstractHTML5History.prototype = Object.create( AbstractHistory && AbstractHistory.prototype );
+  AbstractHTML5History.prototype.constructor = AbstractHTML5History;
+
+  AbstractHTML5History.prototype.getCurrentLocation = function getCurrentLocation () {
+    if (this.stack.length === 0) {
+      return getLocation(this.base)
+    } else {
+      var current = this.stack[this.stack.length - 1];
+      return current ? current.fullPath : '/'
+    }
+  };
+
+  return AbstractHTML5History;
+}(AbstractHistory));
+
+/*  */
 
 
 
@@ -2928,6 +2950,9 @@ var VueRouter = function VueRouter (options) {
       break
     case 'abstract':
       this.history = new AbstractHistory(this, options.base);
+      break
+    case 'abstract-history':
+      this.history = new AbstractHTML5History(this, options.base);
       break
     default:
       if (process.env.NODE_ENV !== 'production') {
@@ -3000,6 +3025,8 @@ VueRouter.prototype.init = function init (app /* Vue component instance */) {
       setupListeners,
       setupListeners
     );
+  } else if (history instanceof AbstractHTML5History) {
+    history.push(history.getCurrentLocation());
   }
 
   history.listen(function (route) {
